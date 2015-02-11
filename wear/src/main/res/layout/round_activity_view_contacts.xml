@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="oh.cwrh.com.oh.ViewContactsActivity"
+        tools:deviceIds="wear_round">
+
+        <oh.cwrh.com.oh.custom.SwipeView
+            android:id="@+id/custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <oh.cwrh.com.oh.custom.SwipeView
+            android:id="@+id/custom1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <oh.cwrh.com.oh.custom.SwipeView
+            android:id="@+id/custom2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <oh.cwrh.com.oh.custom.SwipeView
+            android:id="@+id/custom3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</ScrollView>
+

@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/background_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+        <TextView
+            android:background="@color/upper_border"
+            android:text="@string/leaving"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:background="@color/upper_border"
+            android:textColor="@color/white"
+            android:text="@string/here"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:animateLayoutChanges="true"
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:context=".ContactsListActivity"/>
+
+        </ScrollView>
+
+
+        <fragment
+            android:layout_alignParentBottom="true"
+            android:id="@+id/ad_frag"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:name="oh.cwrh.com.oh.ads.AdFragment"
+            tools:layout="@layout/ad_fragment" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Oh</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_remove_favorites">Remove Favorites</string>
+    <!-- ca-app-pub-3940256099942544/6300978111
+        this is the test ID for the ad unit.
+        The real one is not on Github.
+
+        Dont put it on Github.
+    -->
+
+    <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="leaving">OMW</string>
+    <string name="here">Here</string>
+    <string name="message_not_sent">Could not send message</string>
+    <string name="sending">Sending</string>
+    <string name="sent">Sent</string>
+</resources>
