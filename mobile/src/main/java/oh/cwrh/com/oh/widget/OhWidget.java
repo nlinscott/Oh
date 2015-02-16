@@ -24,7 +24,7 @@ public class OhWidget extends AppWidgetProvider {
         // There may be multiple widgets active, so update all of them
         //Debug.log("Updating");
         for (int id : appWidgetIds) {
-            RemoteViews remoteViews = updateWidgetListView(context,id);
+            RemoteViews remoteViews = updateWidgetStackView(context,id);
             appWidgetManager.updateAppWidget(id,remoteViews);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
@@ -41,7 +41,7 @@ public class OhWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private RemoteViews updateWidgetListView(Context context,
+    private RemoteViews updateWidgetStackView(Context context,
                                              int appWidgetId) {
 
 
@@ -50,9 +50,10 @@ public class OhWidget extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
-        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.oh_widget);
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.stack_view_widget);
 
-        rv.setRemoteAdapter(R.id.container, intent);
+        rv.setRemoteAdapter(R.id.stack, intent);
+        rv.setEmptyView(R.id.stack, R.id.stackWidgetEmptyView);
 
         Intent smsIntent = new Intent(context, WidgetBroadcastReceiver.class);
         smsIntent.setAction(WidgetBroadcastReceiver.WIDGET_BUTTON_CLICKED);
@@ -61,7 +62,7 @@ public class OhWidget extends AppWidgetProvider {
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, smsIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        rv.setPendingIntentTemplate(R.id.container, pi);
+        rv.setPendingIntentTemplate(R.id.stack, pi);
 
         return rv;
     }

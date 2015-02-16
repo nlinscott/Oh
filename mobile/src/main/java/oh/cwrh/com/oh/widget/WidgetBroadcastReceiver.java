@@ -19,6 +19,7 @@ public class WidgetBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context c, Intent intent){
+
         String action = intent.getAction();
 
         Intent start = new Intent(c, SendSMS.class);

@@ -5,14 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+
+import oh.cwrh.com.oh.tools.Debug;
 
 /**
  * Created by Nic on 1/31/2015.
  */
 public class DataSource {
-
 
     // Database fields
     private SQLiteDatabase database;
@@ -38,15 +40,17 @@ public class DataSource {
         isOpen = false;
     }
 
-    /**
-     * This creates a note, then returns the newly created note in order to update
-     * the UI.
-     *
-     */
-    public Contact addContact(String name, String phone){
-        if(name.length() > 10) {
-            name = name.substring(0, 10) + "...";
-        }
+    private void addContact(Contact c){
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.COLUMN_NAME, c.getName());
+        values.put(MySQLiteHelper.COLUMN_PHONE, c.getPhone());
+        long insertId = database.insert(MySQLiteHelper.TABLE_CONTACTS, null,
+                values);
+
+    }
+
+    public Contact addContactToUI(String name, String phone){
+
 
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_NAME, name);
@@ -63,13 +67,10 @@ public class DataSource {
         return c;
     }
 
-
     public void deleteContact(Contact c) {
         long id = c.getId();
-        database.delete(MySQLiteHelper.TABLE_CONTACTS, MySQLiteHelper.COLUMN_ID
-                + " = " + id, null);
+        database.delete(MySQLiteHelper.TABLE_CONTACTS, MySQLiteHelper.COLUMN_ID + " = " + id, null);
     }
-
 
     public ArrayList<Contact> getAllContacts() {
         ArrayList<Contact> contacts = new ArrayList<>();
@@ -91,11 +92,35 @@ public class DataSource {
     }
 
     private Contact cursorToContact(Cursor cursor) {
-        Contact c = new Contact(cursor.getLong(0),
+        return new Contact(cursor.getLong(0),
                                 cursor.getString(1),
                                 cursor.getString(2));
 
-        return c;
+
     }
+
+
+    private int getCount(){
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_CONTACTS,
+                allColumns, null, null, null, null, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
+
+    public void commitArrayChanges(ArrayList<Contact> changes){
+        if(changes != getAllContacts()) {
+
+            database.delete(MySQLiteHelper.TABLE_CONTACTS, null, null);
+
+            for (Contact c : changes) {
+
+                addContact(c);
+
+            }
+        }
+
+    }
+
 
 }

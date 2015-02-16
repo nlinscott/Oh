@@ -1,34 +1,33 @@
 package oh.cwrh.com.oh;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
-
-import oh.cwrh.com.oh.custom.SwipeView;
-import oh.cwrh.com.oh.database.Contact;
 import oh.cwrh.com.oh.database.DataSource;
-import oh.cwrh.com.oh.tools.Debug;
+import oh.cwrh.com.oh.fragments.ContactsListFragment;
 
+//TODO: make a tutorial view with a "do not show again" button
 
 public class ContactsListActivity extends Activity {
+
     private static final int PICK_CONTACT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,7 +61,7 @@ public class ContactsListActivity extends Activity {
     }
 
     private void removeItem(){
-        Intent intent = new Intent( this, RemoveFavorites.class );
+        Intent intent = new Intent( this, EditContactList.class );
 
         startActivity(intent);
     }
@@ -107,13 +106,19 @@ public class ContactsListActivity extends Activity {
                         null, null);
                 if(!phones.moveToFirst()){
                     //TODO: No phone number, probably an email contact
+
+                    AlertFactory.getAlertDialogBuilder(
+                            getResources().getString(R.string.uh_oh),
+                            name + getResources().getString(R.string.no_number) ,
+                            this).show();
+
                 }else {
                     int phoneType = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
                     if (phoneType == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) {
                         //its a mobile number, so grab it, set the flag to true and save it
                         phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DATA));
                        // phoneNumber = phoneNumber.replaceAll("\\D", "");
-                        Debug.log(phoneNumber);
+                        //Debug.log(phoneNumber);
                         hasMobileNumber = true;
                     }
                 }
@@ -124,39 +129,53 @@ public class ContactsListActivity extends Activity {
                 if(hasMobileNumber) {
                     DataSource ds = new DataSource(getApplicationContext());
                     ds.open();
-                    ds.addContact(name, phoneNumber);
+                    ds.addContactToUI(name, phoneNumber);
                     ds.close();
+                }else{
+                    //no mobile number
+                    AlertFactory.getAlertDialogBuilder(
+                            getResources().getString(R.string.uh_oh),
+                            name + getResources().getString(R.string.no_mobile_number),
+                            this).show();
                 }
 
             }
         }
-        initialize();
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        LinearLayout layout = (LinearLayout)findViewById(R.id.container);
-        layout.removeAllViews();
-    }
     @Override
     protected void onResume(){
         super.onResume();
-        LinearLayout layout = (LinearLayout)findViewById(R.id.container);
-        layout.removeAllViews();
-        initialize();
+        FragmentManager mgr = getFragmentManager();
+        ContactsListFragment frag = (ContactsListFragment)mgr.findFragmentById(R.id.main_list_frag);
+        frag.notifyDataSetChanged();
+
     }
 
-    public void initialize(){
-        LinearLayout layout = (LinearLayout)findViewById(R.id.container);
-        DataSource ds = new DataSource(this);
-        ds.open();
-        for(Contact c : ds.getAllContacts()){
-            View item = LayoutInflater.from(this).inflate(R.layout.contacts_list_item, null);
-            layout.addView(item);
-            SwipeView lrc = (SwipeView)item.findViewById(R.id.contact);
-            lrc.setNameAndNumber(c.getName(),c.getPhone());
+
+    /**
+     * alert factory builds dialogs with a title and body. Implementation shows it once build
+     *
+     */
+    private static class AlertFactory{
+
+
+        public static AlertDialog getAlertDialogBuilder(String title, String text, Context context){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(title);
+            builder.setMessage(text);
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            return builder.create();
+
         }
-        ds.close();
+
+
     }
 }

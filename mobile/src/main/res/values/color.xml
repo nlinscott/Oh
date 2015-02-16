@@ -4,6 +4,7 @@
 
     <color name="white">#ffffffff</color>
 
+    <!-- TODO: are these the colors we want? -->
 
     <color name="upper_border">#ff31ab83</color>
     <color name="contact">#ff64deb6</color>
@@ -11,7 +12,6 @@
 
 
     <color name="btn_right">#ff0a92b2</color>
-    <color name="btn_right_gradient">#ff0a92b2</color>
 
     <color name="background_main">#ff085a8c</color>
 

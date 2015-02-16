@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RemoveFavorites"
+            android:name=".EditContactList"
             android:parentActivityName=".ContactsListActivity"
             android:label="@string/title_activity_remove_favorites" >
             <meta-data

@@ -32,7 +32,17 @@
         </LinearLayout>
 
 
+   <fragment
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:name="oh.cwrh.com.oh.fragments.ContactsListFragment"
+       android:id="@+id/main_list_frag"
+       tools:layout="@layout/list_fragment"/>
 
+
+    <!-- TODO: put the ad in here -->
+
+<!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -58,10 +68,10 @@
             android:id="@+id/ad_frag"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:name="oh.cwrh.com.oh.ads.AdFragment"
+            android:name="oh.cwrh.com.oh.fragments.AdFragment"
             tools:layout="@layout/ad_fragment" />
 
     </RelativeLayout>
 
-
+-->
 </LinearLayout>

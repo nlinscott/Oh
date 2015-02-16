@@ -1,4 +1,4 @@
-package oh.cwrh.com.oh.ads;
+package oh.cwrh.com.oh.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;

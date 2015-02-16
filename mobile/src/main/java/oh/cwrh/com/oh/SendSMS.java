@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.telephony.SmsManager;
 
+import oh.cwrh.com.oh.tools.Debug;
+
 
 public class SendSMS extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
@@ -52,7 +54,7 @@ public class SendSMS extends IntentService {
         nm.notify(NOTIFICATION_ID, builder.build());
 
         try{
-
+            //Debug.log(message + " to " + name + " " + number);
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(number,null,message,null,null);
             builder.setContentTitle(getString(R.string.sent) + " " + message);

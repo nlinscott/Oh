@@ -1,0 +1,11 @@
+<ListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true"
+    android:id="@+id/remove_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="oh.cwrh.com.oh.EditContactList"/>
+
+
+

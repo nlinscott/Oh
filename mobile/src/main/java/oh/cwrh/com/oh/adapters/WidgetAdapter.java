@@ -1,4 +1,4 @@
-package oh.cwrh.com.oh.widget;
+package oh.cwrh.com.oh.adapters;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -20,7 +20,7 @@ import oh.cwrh.com.oh.tools.Debug;
 /**
  * Created by Nic on 2/7/2015.
  */
-public class ContactsAdapter implements RemoteViewsService.RemoteViewsFactory {
+public class WidgetAdapter implements RemoteViewsService.RemoteViewsFactory {
 
     private ArrayList<Contact> list = new ArrayList<>();
     private Context context = null;
@@ -59,7 +59,7 @@ public class ContactsAdapter implements RemoteViewsService.RemoteViewsFactory {
         return false;
     }
 
-    public ContactsAdapter(Context context, Intent intent) {
+    public WidgetAdapter(Context context, Intent intent) {
         this.context = context;
         appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -81,7 +81,7 @@ public class ContactsAdapter implements RemoteViewsService.RemoteViewsFactory {
     public RemoteViews getViewAt(int position) {
 
         final RemoteViews remoteView = new RemoteViews(
-                context.getPackageName(), R.layout.widget_list_item);
+                context.getPackageName(), R.layout.stack_item);
 
 
         Contact c = list.get(position);
@@ -100,7 +100,7 @@ public class ContactsAdapter implements RemoteViewsService.RemoteViewsFactory {
         Intent hereIntent = new Intent();
         hereIntent.putExtras(hereBundle);
         //set each item
-        remoteView.setOnClickFillInIntent(R.id.here, hereIntent);
+        remoteView.setOnClickFillInIntent(R.id.btn_widget_here, hereIntent);
 
         //pass a bundle of data
         Bundle leavingBundle = new Bundle();
@@ -113,7 +113,7 @@ public class ContactsAdapter implements RemoteViewsService.RemoteViewsFactory {
         Intent leavingIntent = new Intent();
         leavingIntent.putExtras(leavingBundle);
 
-        remoteView.setOnClickFillInIntent(R.id.leaving, leavingIntent);
+        remoteView.setOnClickFillInIntent(R.id.btn_widget_leaving, leavingIntent);
 
         //will wrap the entire list in OnUpdate
         return remoteView;
