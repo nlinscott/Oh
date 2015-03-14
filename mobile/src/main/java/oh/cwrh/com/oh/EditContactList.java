@@ -15,7 +15,6 @@ import oh.cwrh.com.oh.database.DataSource;
 
 public class EditContactList extends Activity {
 
-    private DataSource dataSource;
 
     private RemoveContactAdapter removeContactAdapter;
 
@@ -30,13 +29,15 @@ public class EditContactList extends Activity {
         super.onPause();
 
         if(removeContactAdapter.isDataSetChanged()) {
+            DataSource dataSource = DataSource.getInstance(this);
+            dataSource.open();
+
             dataSource.commitArrayChanges(removeContactAdapter.getList());
             Toast.makeText(this,getResources().getString(R.string.saving_feedback),Toast.LENGTH_SHORT).show();
-        }
 
-        if (dataSource.isOpen()) {
             dataSource.close();
         }
+
 
 
     }
@@ -45,9 +46,9 @@ public class EditContactList extends Activity {
     protected void onResume(){
         super.onResume();
 
-        ListView list =  (ListView)findViewById(R.id.remove_list);
+        ListView list = (ListView)findViewById(R.id.remove_list);
 
-        dataSource = new DataSource(this);
+        DataSource dataSource = DataSource.getInstance(this);
         dataSource.open();
 
         removeContactAdapter = new RemoveContactAdapter(this, dataSource.getAllContacts());
@@ -62,6 +63,8 @@ public class EditContactList extends Activity {
                 return true;
             }
         });
+        dataSource.close();
+
     }
 
 

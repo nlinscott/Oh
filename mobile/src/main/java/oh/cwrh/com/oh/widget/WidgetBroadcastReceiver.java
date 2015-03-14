@@ -4,10 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import oh.cwrh.com.oh.SendSMS;
-import oh.cwrh.com.oh.tools.Debug;
 
 public class WidgetBroadcastReceiver extends BroadcastReceiver {
 
@@ -25,19 +23,19 @@ public class WidgetBroadcastReceiver extends BroadcastReceiver {
         Intent start = new Intent(c, SendSMS.class);
         //was packed into a bundle in the ContactsAdapter, must get a bundle of extras
         //using SendSMS constants
-        Bundle b =  intent.getExtras();
+        Bundle bundle =  intent.getExtras();
         //Debug.log(b.getString(SendSMS.PHONE_NUMBER));
 
         if(action.equals(WIDGET_BUTTON_CLICKED)){
             if(intent.getBooleanExtra(SendSMS.IS_LEAVING,true)){
-                start.setAction(SendSMS.ACTION_LEAVING);
+                start.setAction(SendSMS.ACTION_SEND_OMW);
             }else if(!intent.getBooleanExtra(SendSMS.IS_LEAVING,false)){
-                start.setAction(SendSMS.ACTION_HERE);
+                start.setAction(SendSMS.ACTION_SEND_HERE);
             }
         }
 
-        start.putExtra(SendSMS.NAME, b.getString(SendSMS.NAME));
-        start.putExtra(SendSMS.PHONE_NUMBER, b.getString(SendSMS.PHONE_NUMBER));
+        start.putExtra(SendSMS.NAME, bundle.getString(SendSMS.NAME));
+        start.putExtra(SendSMS.PHONE_NUMBER, bundle.getString(SendSMS.PHONE_NUMBER));
 
         c.startService(start);
 

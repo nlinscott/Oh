@@ -4,17 +4,13 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Handler;
-import android.telephony.SmsManager;
-
-import oh.cwrh.com.oh.tools.Debug;
 
 
 public class SendSMS extends IntentService {
-    // TODO: Rename actions, choose action names that describe tasks that this
-    // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-    public static final String ACTION_LEAVING = "oh.cwrh.com.oh.action.LEAVING";
-    public static final String ACTION_HERE = "oh.cwrh.com.oh.action.HERE";
+
+    public static final String ACTION_SEND_OMW = "oh.cwrh.com.oh.action.OMW";
+    public static final String ACTION_SEND_HERE = "oh.cwrh.com.oh.action.HERE";
+
     private static final int DELAY = 2000;
     public static final String PHONE_NUMBER = "phone";
     public static final String IS_LEAVING = "isLeaving";
@@ -32,9 +28,10 @@ public class SendSMS extends IntentService {
 
             String number = intent.getStringExtra(PHONE_NUMBER);
             String name = intent.getStringExtra(NAME);
-            if (ACTION_LEAVING.equals(action)) {
+
+            if (action.equals(ACTION_SEND_OMW)) {
                 sendSMS(getResources().getString(R.string.leaving),number, name);
-            } else if (ACTION_HERE.equals(action)) {
+            } else if (action.equals(ACTION_SEND_HERE)) {
                 sendSMS(getResources().getString(R.string.here),number,name);
             }
         }
@@ -54,9 +51,10 @@ public class SendSMS extends IntentService {
         nm.notify(NOTIFICATION_ID, builder.build());
 
         try{
+            //TODO: uncomment this if you want to send SMS. Omitted for UI testing
             //Debug.log(message + " to " + name + " " + number);
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number,null,message,null,null);
+            //SmsManager smsManager = SmsManager.getDefault();
+           // smsManager.sendTextMessage(number,null,message,null,null);
             builder.setContentTitle(getString(R.string.sent) + " " + message);
             nm.notify(NOTIFICATION_ID, builder.build());
 

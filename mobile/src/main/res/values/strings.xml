@@ -21,8 +21,10 @@
 
 
     <string name="uh_oh">Uh-oh!</string>
-    <string name="no_mobile_number">\'s phone number is not Mobile. Ensure it\'s not saved as a Home or Work number and try again.</string>
-    <string name="no_number"> has no saved phone number. Please double check this contact and try again.</string>
+    <string name="no_number">This person has no saved mobile phone number. Please double check their contact info and try again.</string>
+
+    <string name="error_exists">Error</string>
+    <string name="already_exists">is already in this list.</string>
 
 
     <string name="message_not_sent">Could not send message</string>

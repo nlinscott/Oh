@@ -1,10 +1,8 @@
 package oh.cwrh.com.oh.adapters;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -15,25 +13,23 @@ import oh.cwrh.com.oh.R;
 import oh.cwrh.com.oh.SendSMS;
 import oh.cwrh.com.oh.database.Contact;
 import oh.cwrh.com.oh.database.DataSource;
-import oh.cwrh.com.oh.tools.Debug;
 
 /**
  * Created by Nic on 2/7/2015.
  */
 public class WidgetAdapter implements RemoteViewsService.RemoteViewsFactory {
 
-    private ArrayList<Contact> list = new ArrayList<>();
+    private ArrayList<Contact> list;
     private Context context = null;
     private int appWidgetId;
 
 
     public void onCreate() {
 
-        DataSource ds = new DataSource(context);
+        DataSource ds = DataSource.getInstance(context);
         ds.open();
-        for (Contact c : ds.getAllContacts()){
-            list.add(c);
-        }
+        list = ds.getAllContacts();
+        ds.close();
 
     }
 

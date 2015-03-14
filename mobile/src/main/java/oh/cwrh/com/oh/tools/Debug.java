@@ -7,6 +7,7 @@ import android.util.Log;
  */
 public class Debug {
 
+
     public static void log(String message){
         Log.d("DEBUG======", message);
     }

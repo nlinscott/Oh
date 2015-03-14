@@ -5,25 +5,37 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import java.util.ArrayList;
-
-import oh.cwrh.com.oh.tools.Debug;
 
 /**
  * Created by Nic on 1/31/2015.
  */
 public class DataSource {
 
+    private static DataSource dbInstance = null;
+
     // Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-            MySQLiteHelper.COLUMN_NAME, MySQLiteHelper.COLUMN_PHONE };
+
+    private String[] allColumns = {
+            MySQLiteHelper.COLUMN_ID,
+            MySQLiteHelper.COLUMN_NAME,
+            MySQLiteHelper.COLUMN_PHONE,
+            MySQLiteHelper.COLUMN_PHOTO
+    };
     private boolean isOpen;
 
-    public DataSource(Context context) {
+    public static DataSource getInstance(Context c){
+        if(dbInstance == null) {
+            dbInstance = new DataSource(c);
+        }
+        return dbInstance;
+    }
+
+    private DataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
         isOpen = false;
     }
@@ -44,27 +56,53 @@ public class DataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_NAME, c.getName());
         values.put(MySQLiteHelper.COLUMN_PHONE, c.getPhone());
-        long insertId = database.insert(MySQLiteHelper.TABLE_CONTACTS, null,
+        if(c.getPhotoUri()!=null){
+            values.put(MySQLiteHelper.COLUMN_PHOTO, c.getPhotoUri().toString());
+        }
+       database.insert(MySQLiteHelper.TABLE_CONTACTS, null,
                 values);
 
     }
 
-    public Contact addContactToUI(String name, String phone){
+    /**
+     * Checks the database to see if the contact exists
+     * @param contact
+     * @return
+     */
+    public boolean contactExists(Contact contact){
 
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_CONTACTS,
+                allColumns,
+                MySQLiteHelper.COLUMN_NAME + " = ? AND " +
+                        MySQLiteHelper.COLUMN_PHONE + " = ?",
+                new String[]{contact.getName(), contact.getPhone()},
+                null,null, null, null);
+
+        boolean result = cursor.moveToFirst();
+        cursor.close();
+
+        return result;
+    }
+
+    public Contact addContactToUI(Contact c){
 
         ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.COLUMN_NAME, name);
-        values.put(MySQLiteHelper.COLUMN_PHONE, phone);
+        values.put(MySQLiteHelper.COLUMN_NAME, c.getName());
+        values.put(MySQLiteHelper.COLUMN_PHONE, c.getPhone());
+        if(c.getPhotoUri()!=null){
+            values.put(MySQLiteHelper.COLUMN_PHOTO, c.getPhotoUri().toString());
+        }
         long insertId = database.insert(MySQLiteHelper.TABLE_CONTACTS, null,
                 values);
 
         Cursor cursor = database.query(MySQLiteHelper.TABLE_CONTACTS,
                 allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId,null,
                 null, null, null);
+
         cursor.moveToFirst();
-        Contact c = cursorToContact(cursor);
+        Contact contact = cursorToContact(cursor);
         cursor.close();
-        return c;
+        return contact;
     }
 
     public void deleteContact(Contact c) {
@@ -92,6 +130,13 @@ public class DataSource {
     }
 
     private Contact cursorToContact(Cursor cursor) {
+        if(cursor.getString(3)!= null){
+            return new Contact(cursor.getLong(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    Uri.parse(cursor.getString(3)));
+        }
+
         return new Contact(cursor.getLong(0),
                                 cursor.getString(1),
                                 cursor.getString(2));
