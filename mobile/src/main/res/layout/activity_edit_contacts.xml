@@ -5,7 +5,7 @@
     android:id="@+id/remove_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="oh.cwrh.com.oh.EditContactList"/>
+    tools:context="oh.cwrh.com.oh.EditContactList" />
 
 
 

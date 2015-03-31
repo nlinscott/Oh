@@ -6,14 +6,20 @@
 
     <!-- TODO: are these the colors we want? -->
 
-    <color name="upper_border">#ff31ab83</color>
-    <color name="contact">#ff64deb6</color>
-    <color name="btn_left">#ff8bc3d9</color>
+    <color name="upper_border">#8bc3d9</color>
+    <color name="contact">#ffffff</color>
+    <color name="btn_left">#162000</color>
 
-
-    <color name="btn_right">#ff0a92b2</color>
+    <color name="btn_right">#0a92b2</color>
 
     <color name="background_main">#ff085a8c</color>
+
+    <!-- TODO: Matt's Colors -->
+    <color name="lightgray">#f2f2f2</color>
+    <color name="lightblue">#8bc3d9</color>
+    <color name="blue">#0a92b2</color>
+    <color name="midblue">#2b4780</color>
+    <color name="darkblue">#162440</color>
 
 
 

@@ -3,6 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/frag_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout" />
+
     <StackView
         android:id="@+id/stack"
         android:layout_width="match_parent"
@@ -13,12 +19,12 @@
     <TextView
         android:background="@drawable/contact_background"
         android:id="@+id/stackWidgetEmptyView"
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_contacts"
         android:gravity="center"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="16sp" />
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:padding="10dp" />
+
 </FrameLayout>

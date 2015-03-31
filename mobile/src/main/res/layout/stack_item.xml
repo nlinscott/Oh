@@ -17,7 +17,7 @@
             android:id="@+id/name"
             android:text="John Spinkles"
             android:textSize="35sp"
-            android:textColor="@color/white"
+            android:textColor="@color/blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -25,9 +25,10 @@
             android:id="@+id/number"
             android:textSize="20sp"
             android:text="1234567899"
-            android:textColor="@color/white"
+            android:textColor="@color/lightblue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textStyle="italic" />
 
     </LinearLayout>
 
@@ -45,7 +46,10 @@
             android:id="@+id/btn_widget_leaving"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/midblue"
+            android:textColor="@color/lightgray"
+            android:textStyle="bold|italic" />
         <Button
             android:text="@string/here"
             android:clickable="true"
@@ -53,6 +57,9 @@
             android:id="@+id/btn_widget_here"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/darkblue"
+            android:textColor="@color/lightblue"
+            android:textStyle="bold|italic" />
         </LinearLayout>
 </LinearLayout>
