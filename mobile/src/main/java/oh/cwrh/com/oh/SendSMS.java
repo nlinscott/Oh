@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.telephony.SmsManager;
 
 
 public class SendSMS extends IntentService {
@@ -54,7 +55,7 @@ public class SendSMS extends IntentService {
             //TODO: uncomment this if you want to send SMS. Omitted for UI testing
             //Debug.log(message + " to " + name + " " + number);
             //SmsManager smsManager = SmsManager.getDefault();
-           // smsManager.sendTextMessage(number,null,message,null,null);
+            //smsManager.sendTextMessage(number,null,message,null,null);
             builder.setContentTitle(getString(R.string.sent) + " " + message);
             nm.notify(NOTIFICATION_ID, builder.build());
 
