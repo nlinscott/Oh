@@ -16,12 +16,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import oh.cwrh.com.oh.database.Contact;
 import oh.cwrh.com.oh.database.DataSource;
 import oh.cwrh.com.oh.fragments.ContactInfoFragment;
+import oh.cwrh.com.oh.services.SyncWearable;
 import oh.cwrh.com.oh.tools.ContactInfoHandler;
 import oh.cwrh.com.oh.tools.ZoomTransformer;
 
@@ -66,6 +68,8 @@ public class ContactSwipeViewActivity extends FragmentActivity {
             addItem();
         }else if(id == R.id.remove){
             removeItem();
+        }else if(id == R.id.sync){
+            startSync();
         }
 
         return super.onOptionsItemSelected(item);
@@ -81,6 +85,12 @@ public class ContactSwipeViewActivity extends FragmentActivity {
         Intent intent = new Intent( this, EditContactList.class );
 
         startActivity(intent);
+    }
+
+    private void startSync(){
+
+        startService(new Intent(this, SyncWearable.class));
+        Toast.makeText(this, getResources().getString(R.string.begin_sync), Toast.LENGTH_LONG).show();
     }
 
     @Override

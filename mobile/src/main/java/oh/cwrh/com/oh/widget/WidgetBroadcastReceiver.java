@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import oh.cwrh.com.oh.SendSMS;
+import oh.cwrh.com.oh.services.SendSMS;
 
 public class WidgetBroadcastReceiver extends BroadcastReceiver {
 

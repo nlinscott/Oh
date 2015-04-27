@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_teal">#ff64deb6</color>
-    <color name="teal_undertone">#ff31ab83</color>
-    <color name="white">#ffffffff</color>
 
-    <color name="upper_border">#ff31ab83</color>
-    <color name="contact">#ff64deb6</color>
-    <color name="btn_left">#ff8bc3d9</color>
-    <color name="btn_right">#ff0a92b2</color>
-    <color name="background_main">#ff085a8c</color>
+
+    <color name="lightgray">#f2f2f2</color>
+    <color name="lightblue">#8bc3d9</color>
+    <color name="blue">#0a92b2</color>
+    <color name="midblue">#2b4780</color>
+    <color name="darkblue">#162440</color>
 
 </resources>

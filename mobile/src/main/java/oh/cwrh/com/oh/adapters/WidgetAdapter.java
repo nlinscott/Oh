@@ -10,7 +10,7 @@ import android.widget.RemoteViewsService;
 import java.util.ArrayList;
 
 import oh.cwrh.com.oh.R;
-import oh.cwrh.com.oh.SendSMS;
+import oh.cwrh.com.oh.services.SendSMS;
 import oh.cwrh.com.oh.database.Contact;
 import oh.cwrh.com.oh.database.DataSource;
 

@@ -7,11 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import oh.cwrh.com.oh.R;
-import oh.cwrh.com.oh.SendSMS;
-import oh.cwrh.com.oh.tools.Debug;
 
 
 /**

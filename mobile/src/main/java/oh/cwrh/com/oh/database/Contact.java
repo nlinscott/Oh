@@ -2,6 +2,11 @@ package oh.cwrh.com.oh.database;
 
 import android.net.Uri;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import oh.cwrh.com.oh.tools.Debug;
+
 /**
  * Created by Nic on 1/31/2015.
  */
@@ -15,6 +20,29 @@ public class Contact {
     public String getName(){return name;}
     public String getPhone(){return phone;}
     public Uri getPhotoUri(){return photo;}
+
+    /**
+     * Creates a JSON string
+     * for sycning to wearable
+     */
+    public JSONObject toJSON(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", this.name);
+            json.put("phone_number", this.phone);
+            json.put("ID", this.id);
+
+            if(photo == null){
+                json.put("photo", JSONObject.NULL);
+            }else{
+                json.put("photo", this.photo);
+            }
+        }catch(JSONException e){
+            Debug.log("Could not make JSON string from Contact --- " + e.getMessage());
+        }
+
+        return json;
+    }
 
 
     /**

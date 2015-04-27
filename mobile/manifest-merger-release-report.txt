@@ -92,7 +92,7 @@ ADDED from AndroidManifest.xml:40:9
 		ADDED from AndroidManifest.xml:43:13
 	android:name
 		ADDED from AndroidManifest.xml:41:13
-service#oh.cwrh.com.oh.SendSMS
+service#oh.cwrh.com.oh.services.SendSMS
 ADDED from AndroidManifest.xml:46:9
 	android:exported
 		ADDED from AndroidManifest.xml:48:13

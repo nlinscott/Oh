@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Oh</string>
     <string name="done">Done</string>
+
+    <!--- main activity menu -->
     <string name="action_settings">Settings</string>
     <string name="title_activity_remove_favorites">Remove Favorites</string>
+    <string name="sync_now">Sync to Wearable</string>
+
     <!-- ca-app-pub-3940256099942544/6300978111
         this is the test ID for the ad unit.
         The real one is not on Github.
@@ -12,11 +16,15 @@
 
     <string name="ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
+    <!-- syncing data to wearable-->
+    <string name="contacts_synced">Contacts have been synced.</string>
+    <string name="error_syncing">Could not sync contacts.</string>
+    <string name="begin_sync">Syncing&#8230;</string>
 
     <string name="saving_feedback">Saving changes&#8230;</string>
 
     <!-- messages sent -->
-    <string name="leaving">OMW</string>
+    <string name="omw">OMW</string>
     <string name="here">Here</string>
 
 

@@ -8,8 +8,14 @@
         android:icon="@android:drawable/ic_menu_add"/>
 
     <item android:id="@+id/remove"
+        android:orderInCategory="98"
+        android:title="@string/title_activity_remove_favorites"
+        app:showAsAction="never"
+        android:showAsAction="never"/>
+
+    <item android:id="@+id/sync"
         android:orderInCategory="99"
-        android:title="Remove Favorites"
+        android:title="@string/sync_now"
         app:showAsAction="never"
         android:showAsAction="never"/>
 

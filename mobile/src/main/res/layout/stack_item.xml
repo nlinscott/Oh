@@ -40,7 +40,7 @@
 
 
         <Button
-            android:text="@string/leaving"
+            android:text="@string/omw"
             android:clickable="true"
             android:enabled="true"
             android:id="@+id/btn_widget_leaving"
