@@ -1,14 +1,14 @@
-package oh.cwrh.com.oh.datasync;
+package com.cwrh.oh.datasync;
 
+import com.cwrh.oh.database.DataSource;
+import com.cwrh.oh.tools.Debug;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import oh.cwrh.com.oh.database.Contact;
-import oh.cwrh.com.oh.database.DataSource;
-import oh.cwrh.com.oh.tools.Debug;
+import com.cwrh.oh.database.Contact;
 
 public class DataService extends WearableListenerService {
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="oh.cwrh.com.oh" >
+    package="com.cwrh.oh" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -34,7 +34,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="oh.cwrh.com.oh.ContactSwipeViewActivity" />
+                android:value=".ContactSwipeViewActivity" />
         </activity>
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
@@ -67,7 +67,7 @@
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
-                <action android:name="oh.cwrh.com.oh.custom.intent.WIDGET_BUTTON_CLICKED" />
+                <action android:name="com.cwrh.oh.custom.intent.WIDGET_BUTTON_CLICKED" />
             </intent-filter>
         </receiver>
 

@@ -1,4 +1,4 @@
-package oh.cwrh.com.oh.database;
+package com.cwrh.oh.database;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,11 +1,11 @@
-package oh.cwrh.com.oh.database;
+package com.cwrh.oh.database;
 
 import android.net.Uri;
 
+import com.cwrh.oh.tools.Debug;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import oh.cwrh.com.oh.tools.Debug;
 
 /**
  * Created by Nic on 1/31/2015.

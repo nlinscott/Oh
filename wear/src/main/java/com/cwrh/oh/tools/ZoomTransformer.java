@@ -1,4 +1,4 @@
-package oh.cwrh.com.oh.tools;
+package com.cwrh.oh.tools;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

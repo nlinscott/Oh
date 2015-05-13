@@ -1,4 +1,4 @@
-package oh.cwrh.com.oh;
+package com.cwrh.oh;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +12,14 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.cwrh.oh.database.Contact;
+import com.cwrh.oh.database.DataSource;
+import com.cwrh.oh.fragment.ContactInfoFragment;
+import com.cwrh.oh.tools.ZoomTransformer;
+
 import java.util.ArrayList;
 
-import oh.cwrh.com.oh.database.Contact;
-import oh.cwrh.com.oh.database.DataSource;
-import oh.cwrh.com.oh.fragment.ContactInfoFragment;
-import oh.cwrh.com.oh.tools.ZoomTransformer;
+import oh.cwrh.com.oh.R;
 
 public class ViewContactsActivity extends FragmentActivity{
 

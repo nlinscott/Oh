@@ -1,4 +1,4 @@
-package oh.cwrh.com.oh.datasync;
+package com.cwrh.oh.datasync;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import com.google.android.gms.wearable.Wearable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import oh.cwrh.com.oh.database.Contact;
-import oh.cwrh.com.oh.tools.Debug;
+import com.cwrh.oh.database.Contact;
+import com.cwrh.oh.tools.Debug;
 
 /**
  * Created by Nic on 4/27/2015.
