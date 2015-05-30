@@ -4,4 +4,8 @@
 
     <solid android:color="@color/midblue"/>
 
+    <size android:height="75dp" android:width="75dp"/>
+
+    <stroke android:color="@color/lightblue" android:width="5dp"/>
+
 </shape>

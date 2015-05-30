@@ -2,6 +2,7 @@ package com.cwrh.oh.tools;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Looper;
 
 import com.cwrh.oh.database.Contact;
 import com.cwrh.oh.database.DataSource;
@@ -63,6 +64,8 @@ public class SyncWearable  implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Debug.log("connection failed");
+
+        callback.onComplete(false);
     }
 
     private class SendContactList extends Thread {
@@ -75,6 +78,8 @@ public class SyncWearable  implements
 
         public void run() {
 
+
+            Looper.prepare();
 
             DataSource ds = DataSource.getInstance(context);
             ds.open();
@@ -113,6 +118,8 @@ public class SyncWearable  implements
                 }
 
             }
+            Looper.loop();
+
             tearDown();
         }
     }

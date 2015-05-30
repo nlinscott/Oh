@@ -125,7 +125,6 @@ public class ContactSwipeViewActivity extends FragmentActivity {
             @Override
             public void onStart() {
                 currentlySyncing = true;
-
                 invalidateOptionsMenu();
 
                 Toast.makeText(getApplicationContext(),
@@ -137,7 +136,6 @@ public class ContactSwipeViewActivity extends FragmentActivity {
             @Override
             public void onComplete(boolean success) {
                 currentlySyncing = false;
-
                 if(success){
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.contacts_synced),
@@ -152,6 +150,7 @@ public class ContactSwipeViewActivity extends FragmentActivity {
                 invalidateOptionsMenu();
             }
         });
+
         syncWearable.sync();
 
     }
