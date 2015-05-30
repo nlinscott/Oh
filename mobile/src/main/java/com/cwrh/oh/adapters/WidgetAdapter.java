@@ -23,7 +23,6 @@ public class WidgetAdapter implements RemoteViewsService.RemoteViewsFactory {
     private Context context = null;
     private int mAppWidgetId;
 
-
     public void onCreate() {
         initializeList();
     }
