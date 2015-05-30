@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_remove_favorites">Remove Favorites</string>
     <string name="sync_now">Sync to Wearable</string>
+    <string name="not_connected">No Wearables Connected</string>
 
     <!-- ca-app-pub-3940256099942544/6300978111
         this is the test ID for the ad unit.
@@ -31,7 +32,7 @@
     <string name="uh_oh">Uh-oh!</string>
     <string name="no_number">This person has no saved mobile phone number. Please double check their contact info and try again.</string>
 
-    <string name="error_exists">Error</string>
+    <string name="error_exists">Wait!</string>
     <string name="already_exists">is already in this list.</string>
 
 

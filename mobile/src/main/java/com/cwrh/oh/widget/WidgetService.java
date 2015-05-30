@@ -17,5 +17,19 @@ public class WidgetService extends RemoteViewsService {
         return (new WidgetAdapter(this.getApplicationContext(), intent));
     }
 
+/*
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
+        Debug.log("destroying WidgetService");
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Debug.log("unbinding WidgetService");
+
+        return super.onUnbind(intent);
+    }
+    */
 }

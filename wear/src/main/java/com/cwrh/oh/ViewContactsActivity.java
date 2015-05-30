@@ -19,7 +19,6 @@ import com.cwrh.oh.tools.ZoomTransformer;
 
 import java.util.ArrayList;
 
-import oh.cwrh.com.oh.R;
 
 public class ViewContactsActivity extends FragmentActivity{
 
@@ -31,11 +30,12 @@ public class ViewContactsActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_contacts);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
 
-            initialize();
+                initialize();
 
             }
         });
@@ -80,6 +80,7 @@ public class ViewContactsActivity extends FragmentActivity{
             }
         });
     }
+
 
     private class ContactSliderAdapter extends FragmentStatePagerAdapter {
 

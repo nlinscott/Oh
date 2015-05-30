@@ -5,22 +5,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cwrh.oh.R;
 import com.cwrh.oh.database.Contact;
 import com.cwrh.oh.services.SendSMS;
-
-import com.cwrh.oh.R;
 
 /**
  * Created by Nic on 3/10/2015.
  */
-public class ContactInfoFragment extends Fragment {
+public class ContactInfoFragment extends Fragment implements SendButtonsFragment.ButtonsClickedCallback{
 
     public ContactInfoFragment(){}
 
@@ -28,9 +27,13 @@ public class ContactInfoFragment extends Fragment {
 
     private Contact contact;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        super.onCreateView(inflater, container, savedInstanceState);
+
         //Debug.log("view created");
         rootView = inflater.inflate(
                 R.layout.contact_fragment, container, false);
@@ -44,11 +47,12 @@ public class ContactInfoFragment extends Fragment {
 
         setTextViews();
 
-        setButtons();
-
         //Debug.log("loaded " + contact.getName());
         setImage();
+
+        setBtnFragment();
     }
+
 
     private void setTextViews(){
         TextView nameView = (TextView)rootView.findViewById(R.id.frag_name);
@@ -62,23 +66,12 @@ public class ContactInfoFragment extends Fragment {
      * If you want the buttons to actually send SMS, you must uncomment some code here:
      * {@link SendSMS#sendSMS(String, String, String)}
      */
-    private void setButtons(){
-        Button here = (Button)rootView.findViewById(R.id.frag_btn_here);
-        Button omw = (Button)rootView.findViewById(R.id.frag_btn_omw);
+    private void setBtnFragment(){
 
-        here.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendHere();
-            }
-        });
+        FragmentManager fm = getChildFragmentManager();
+        SendButtonsFragment fragment =  (SendButtonsFragment)fm.findFragmentById(R.id.btns_fragment);
+        fragment.setCallback(this);
 
-        omw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendOMW();
-            }
-        });
     }
 
     public void setContact(Contact c){
@@ -117,7 +110,6 @@ public class ContactInfoFragment extends Fragment {
         Intent intent = buildIntent();
         intent.setAction(SendSMS.ACTION_SEND_HERE);
         getActivity().startService(intent);
-
     }
 
     /**
@@ -129,4 +121,17 @@ public class ContactInfoFragment extends Fragment {
         getActivity().startService(intent);
     }
 
+
+    /**
+     * Callback methods to know when and which button was clicked
+     */
+    @Override
+    public void clickedHere() {
+        sendHere();
+    }
+
+    @Override
+    public void clickedOMW() {
+        sendOMW();
+    }
 }

@@ -49,6 +49,7 @@
         <receiver android:name=".widget.OhWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.cwrh.oh.action.UPDATE_WIDGET"/>
             </intent-filter>
 
             <meta-data
@@ -56,8 +57,6 @@
                 android:resource="@xml/oh_widget_info" />
         </receiver>
 
-        <service android:name=".services.SyncWearable" >
-        </service>
         <service
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />

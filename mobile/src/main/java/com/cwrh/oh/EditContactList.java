@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.cwrh.oh.adapters.RemoveContactAdapter;
 import com.cwrh.oh.database.DataSource;
+import com.cwrh.oh.tools.UpdateWidget;
 
 
 public class EditContactList extends Activity {
@@ -36,6 +37,9 @@ public class EditContactList extends Activity {
             Toast.makeText(this,getResources().getString(R.string.saving_feedback),Toast.LENGTH_SHORT).show();
 
             dataSource.close();
+
+            UpdateWidget udw = new UpdateWidget(this);
+            udw.update();
         }
 
 

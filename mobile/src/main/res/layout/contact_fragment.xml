@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightgray"
@@ -12,7 +13,7 @@
 
    <RelativeLayout
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="0dp"
        android:layout_weight="3">
 
 
@@ -22,8 +23,8 @@
            android:layout_height="match_parent"
            android:layout_below="@+id/linearLayout"
            android:layout_alignParentBottom="false"
-           android:layout_alignParentLeft="false"
-           android:layout_alignParentRight="false" />
+           android:layout_alignParentStart="false"
+           android:layout_alignParentEnd="false" />
 
        <LinearLayout
            android:layout_width="wrap_content"
@@ -53,35 +54,14 @@
        </LinearLayout>
    </RelativeLayout>
 
-    <LinearLayout
+
+    <fragment
+        android:id="@+id/btns_fragment"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:name="com.cwrh.oh.fragments.SendButtonsFragment"
+        tools:layout="@layout/fragment_send_btns" />
 
-        <Button
-            android:id="@+id/frag_btn_omw"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/midblue"
-            android:padding="30dp"
-            android:text="OMW"
-            android:textColor="@color/lightgray"
-            android:textStyle="bold|italic" />
-
-        <Button
-                android:id="@+id/frag_btn_here"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/darkblue"
-            android:padding="30dp"
-            android:text="Here"
-            android:textColor="@color/lightblue"
-            android:textStyle="bold|italic" />
-
-    </LinearLayout>
 
 </LinearLayout>

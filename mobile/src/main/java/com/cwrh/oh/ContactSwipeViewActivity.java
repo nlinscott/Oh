@@ -21,11 +21,20 @@ import android.widget.Toast;
 import com.cwrh.oh.database.Contact;
 import com.cwrh.oh.database.DataSource;
 import com.cwrh.oh.fragments.ContactInfoFragment;
-import com.cwrh.oh.services.SyncWearable;
+import com.cwrh.oh.interfaces.NodesConnectedCallback;
+import com.cwrh.oh.interfaces.SyncCallback;
 import com.cwrh.oh.tools.ContactInfoHandler;
+import com.cwrh.oh.tools.SyncWearable;
+import com.cwrh.oh.tools.UpdateWidget;
 import com.cwrh.oh.tools.ZoomTransformer;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.Wearable;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Nic on 3/10/2015.
@@ -36,22 +45,45 @@ public class ContactSwipeViewActivity extends FragmentActivity {
 
     private PagerAdapter pagerAdapter;
 
+    private final int DELAY = 5000;
+
+    private final int DISABLE_BUTTONS_ON_SEND = 4000;
+
     private static final int PICK_CONTACT = 1;
 
     ArrayList<Contact> contactsList;
+
+    private boolean wearableConnected = false;
+    private boolean currentlySyncing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_pager);
         viewPager = (ViewPager) findViewById(R.id.pager);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_contacts_list, menu);
+
+        MenuItem item =  menu.findItem(R.id.sync);
+        if(wearableConnected){
+            item.setEnabled(true);
+            item.setTitle(R.string.sync_now);
+        }else{
+            item.setEnabled(false);
+            item.setTitle(R.string.not_connected);
+        }
+
+        if(currentlySyncing && wearableConnected){
+            item.setEnabled(false);
+            item.setTitle(R.string.begin_sync);
+        }else if(!currentlySyncing && wearableConnected){
+            item.setEnabled(true);
+            item.setTitle(R.string.sync_now);
+        }
         return true;
     }
 
@@ -89,13 +121,46 @@ public class ContactSwipeViewActivity extends FragmentActivity {
 
     private void startSync(){
 
-        startService(new Intent(this, SyncWearable.class));
-        Toast.makeText(this, getResources().getString(R.string.begin_sync), Toast.LENGTH_LONG).show();
+        SyncWearable syncWearable = new SyncWearable(this, new SyncCallback() {
+            @Override
+            public void onStart() {
+                currentlySyncing = true;
+
+                invalidateOptionsMenu();
+
+                Toast.makeText(getApplicationContext(),
+                        getResources().getString(R.string.begin_sync),
+                        Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onComplete(boolean success) {
+                currentlySyncing = false;
+
+                if(success){
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.contacts_synced),
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.error_syncing),
+                            Toast.LENGTH_LONG).show();
+                }
+
+
+                invalidateOptionsMenu();
+            }
+        });
+        syncWearable.sync();
+
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+
+        checkWearableDevice(nodesConnectedCallback);
         refreshContactsList();
         pagerAdapter = new ContactsSliderAdapter(getSupportFragmentManager());
 
@@ -104,6 +169,14 @@ public class ContactSwipeViewActivity extends FragmentActivity {
         viewPager.setAdapter(pagerAdapter);
         viewPager.setPageTransformer(true, new ZoomTransformer());
     }
+
+    private final NodesConnectedCallback nodesConnectedCallback = new NodesConnectedCallback() {
+        @Override
+        public void setStatus(boolean connected) {
+            wearableConnected = connected;
+            invalidateOptionsMenu();
+        }
+    };
 
     private void refreshContactsList(){
         DataSource dataSource = DataSource.getInstance(this);
@@ -162,7 +235,8 @@ public class ContactSwipeViewActivity extends FragmentActivity {
 
         ds.close();
 
-
+        UpdateWidget udw = new UpdateWidget(this);
+        udw.update();
     }
 
     /**
@@ -187,6 +261,33 @@ public class ContactSwipeViewActivity extends FragmentActivity {
             return builder.create();
 
         }
+    }
+
+
+    /**
+     * Uses a NodesConnectedCallback to update the UI accordingly if no wearable devices are connected
+     * @param callback
+     */
+    private void checkWearableDevice(final NodesConnectedCallback callback){
+
+       final GoogleApiClient client = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .build();
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                client.blockingConnect(DELAY, TimeUnit.MILLISECONDS);
+                NodeApi.GetConnectedNodesResult result =
+                        Wearable.NodeApi.getConnectedNodes(client).await();
+                List<Node> nodes = result.getNodes();
+
+                callback.setStatus(nodes.size() > 0);
+
+                client.disconnect();
+            }
+        }).start();
     }
 
     /**

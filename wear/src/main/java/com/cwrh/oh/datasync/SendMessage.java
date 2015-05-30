@@ -1,8 +1,13 @@
 package com.cwrh.oh.datasync;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.wearable.activity.ConfirmationActivity;
 
+import com.cwrh.oh.R;
+import com.cwrh.oh.database.Contact;
+import com.cwrh.oh.tools.Debug;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
@@ -13,9 +18,6 @@ import com.google.android.gms.wearable.Wearable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.cwrh.oh.database.Contact;
-import com.cwrh.oh.tools.Debug;
-
 /**
  * Created by Nic on 4/27/2015.
  */
@@ -25,12 +27,14 @@ public class SendMessage implements
 
     private GoogleApiClient googleApiClient;
     private static final String SMS_PATH = "/sms";
-    public static final String ACTION_SEND_OMW = "oh.cwrh.com.oh.action.OMW";
-    public static final String ACTION_SEND_HERE = "oh.cwrh.com.oh.action.HERE";
+    public static final String ACTION_SEND_OMW = "com.cwrh.oh.action.OMW";
+    public static final String ACTION_SEND_HERE = "com.cwrh.oh.action.HERE";
+
+    public Context context;
 
     public SendMessage(Context c){
 
-
+        context = c;
         googleApiClient = new GoogleApiClient.Builder(c)
             .addApi(Wearable.API)
             .addConnectionCallbacks(this)
@@ -89,12 +93,15 @@ public class SendMessage implements
                     if(result.getStatus().isSuccess()){
                         Debug.log("message sent successfully");
                         //TODO: handle success/failure
+                        success();
+                    }else{
+                        fail();
                     }
                 }
 
             }catch (JSONException ex){
                 Debug.log("Error creating message to send to handheld: " + ex.getMessage());
-
+                fail();
             }
 
 
@@ -102,5 +109,23 @@ public class SendMessage implements
         }
     }
 
+    public void success(){
+        Intent intent = new Intent(context, ConfirmationActivity.class);
+        intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                ConfirmationActivity.SUCCESS_ANIMATION);
+        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
+                context.getResources().getString(R.string.sent));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+    }
 
+    public void fail(){
+        Intent intent = new Intent(context, ConfirmationActivity.class);
+        intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                ConfirmationActivity.FAILURE_ANIMATION);
+        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
+                context.getResources().getString(R.string.not_sent));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 }

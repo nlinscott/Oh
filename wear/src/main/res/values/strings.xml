@@ -6,4 +6,6 @@
     <string name="omw">OMW</string>
 
     <string name="no_contacts">Sync your favorites list from the Oh mobile app.</string>
+    <string name="sent">Sent!</string>
+    <string name="not_sent">Could not send!</string>
 </resources>

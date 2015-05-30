@@ -16,6 +16,16 @@ public class ReceiveWearableMessages extends WearableListenerService {
     public ReceiveWearableMessages() {
     }
 
+    /*
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Debug.log("destroying ReceiveWearableMEssages service");
+    }
+    */
+
+
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         if( messageEvent.getPath().equalsIgnoreCase( SMS_PATH ) ) {

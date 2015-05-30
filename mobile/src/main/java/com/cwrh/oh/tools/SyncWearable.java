@@ -1,13 +1,11 @@
-package com.cwrh.oh.services;
+package com.cwrh.oh.tools;
 
-import android.app.IntentService;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.cwrh.oh.database.Contact;
 import com.cwrh.oh.database.DataSource;
-import com.cwrh.oh.tools.Debug;
+import com.cwrh.oh.interfaces.SyncCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
@@ -23,50 +21,38 @@ import java.util.ArrayList;
 /**
  * Created by Nic on 4/26/2015.
  */
-public class SyncWearable extends IntentService implements
+public class SyncWearable  implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String SYNC_PATH = "/contacts";
-
+    private Context context;
+    private SyncCallback callback;
 
 
     private GoogleApiClient googleClient;
 
-    public SyncWearable(){
-        super("SyncWearable");
-
-    }
-
-    @Override
-    protected void onHandleIntent(Intent intent) {
-
-        googleClient = new GoogleApiClient.Builder(this)
+    public SyncWearable(Context c, SyncCallback callback){
+        this.callback = callback;
+        context = c;
+        googleClient = new GoogleApiClient.Builder(context)
                 .addApi(Wearable.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
 
         googleClient.connect();
-
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(googleClient.isConnected()){
-            googleClient.disconnect();
-        }
-    }
 
     public void sync() {
-        new SendContactList(this).start();
+        new SendContactList(context).start();
     }
 
     @Override
     public void onConnected(Bundle bundle) {
         Debug.log("connected");
-        sync();
+        callback.onStart();
     }
 
     @Override
@@ -103,8 +89,11 @@ public class SyncWearable extends IntentService implements
                     json.put(i + "", list.get(i).toJSON());
                 }
 
-            }catch (JSONException ex){
+            }catch (JSONException ex) {
                 Debug.log(ex.getMessage());
+                callback.onComplete(false);
+                tearDown();
+                return;
             }
 
             NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(googleClient).await();
@@ -117,18 +106,20 @@ public class SyncWearable extends IntentService implements
 
                 if(result.getStatus().isSuccess()){
                     Debug.log("message sent successfully");
-                    //TODO: handle success/failure
-                   // Toast.makeText(context, context.getResources().getString(R.string.contacts_synced),Toast.LENGTH_LONG).show();
+                    callback.onComplete(true);
                 }else{
                     Debug.log("error: message not sent");
-                    //TODO: handle success/failure
-                   // Toast.makeText(context, context.getResources().getString(R.string.error_syncing),Toast.LENGTH_LONG).show();
-
+                    callback.onComplete(false);
                 }
 
             }
+            tearDown();
+        }
+    }
 
-            stopSelf();
+    private void tearDown(){
+        if(googleClient.isConnected()){
+            googleClient.disconnect();
         }
     }
 

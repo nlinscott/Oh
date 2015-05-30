@@ -21,45 +21,44 @@ public class WidgetAdapter implements RemoteViewsService.RemoteViewsFactory {
 
     private ArrayList<Contact> list;
     private Context context = null;
-    private int appWidgetId;
-
+    private int mAppWidgetId;
 
     public void onCreate() {
+        initializeList();
+    }
 
+    private void initializeList() {
         DataSource ds = DataSource.getInstance(context);
         ds.open();
         list = ds.getAllContacts();
         ds.close();
-
     }
 
-
     public RemoteViews getLoadingView() {
-        return null;
+        return new RemoteViews(context.getPackageName(), R.layout.widget_loading);
     }
 
     public int getViewTypeCount() {
         return 1;
     }
 
-    public void onDataSetChanged(){
+    public void onDataSetChanged() {
+        initializeList();
     }
 
     @Override
-    public void onDestroy(){
-        ///
+    public void onDestroy() {
     }
 
     @Override
-    public boolean hasStableIds(){
+    public boolean hasStableIds() {
         return false;
     }
 
     public WidgetAdapter(Context context, Intent intent) {
-        this.context = context;
-        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-
+        this.context = context;
     }
 
 
@@ -76,42 +75,49 @@ public class WidgetAdapter implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public RemoteViews getViewAt(int position) {
 
-        final RemoteViews remoteView = new RemoteViews(
-                context.getPackageName(), R.layout.stack_item);
+
+        if (position >= getCount()) {
+            onDataSetChanged();
+            return getLoadingView();
+
+        } else {
+
+            final RemoteViews remoteView = new RemoteViews(
+                    context.getPackageName(), R.layout.stack_item);
+
+            Contact c = list.get(position);
+
+            //set the textview
+            remoteView.setTextViewText(R.id.name, c.getName());
+            remoteView.setTextViewText(R.id.number, c.getPhone());
+
+            //pass a bundle of data
+            Bundle hereBundle = new Bundle();
+            // is leaving is false, so its a HERE action
+            hereBundle.putBoolean(SendSMS.IS_LEAVING, false);
+            hereBundle.putString(SendSMS.NAME, c.getName());
+            hereBundle.putString(SendSMS.PHONE_NUMBER, c.getPhone());
+
+            Intent hereIntent = new Intent();
+            hereIntent.putExtras(hereBundle);
+            //set each item
+            remoteView.setOnClickFillInIntent(R.id.btn_widget_here, hereIntent);
+
+            //pass a bundle of data
+            Bundle leavingBundle = new Bundle();
+            // is leaving is true, so its a LEAVING action
+            leavingBundle.putBoolean(SendSMS.IS_LEAVING, true);
+            leavingBundle.putString(SendSMS.NAME, c.getName());
+            leavingBundle.putString(SendSMS.PHONE_NUMBER, c.getPhone());
 
 
-        Contact c = list.get(position);
+            Intent leavingIntent = new Intent();
+            leavingIntent.putExtras(leavingBundle);
 
-        //set the textview
-        remoteView.setTextViewText( R.id.name,c.getName());
-        remoteView.setTextViewText( R.id.number,c.getPhone());
+            remoteView.setOnClickFillInIntent(R.id.btn_widget_leaving, leavingIntent);
+            //will wrap the entire list in OnUpdate
 
-        //pass a bundle of data
-        Bundle hereBundle = new Bundle();
-        // is leaving is false, so its a HERE action
-        hereBundle.putBoolean(SendSMS.IS_LEAVING, false);
-        hereBundle.putString(SendSMS.NAME, c.getName());
-        hereBundle.putString(SendSMS.PHONE_NUMBER, c.getPhone());
-
-        Intent hereIntent = new Intent();
-        hereIntent.putExtras(hereBundle);
-        //set each item
-        remoteView.setOnClickFillInIntent(R.id.btn_widget_here, hereIntent);
-
-        //pass a bundle of data
-        Bundle leavingBundle = new Bundle();
-        // is leaving is true, so its a LEAVING action
-        leavingBundle.putBoolean(SendSMS.IS_LEAVING, true);
-        leavingBundle.putString(SendSMS.NAME, c.getName());
-        leavingBundle.putString(SendSMS.PHONE_NUMBER, c.getPhone());
-
-
-        Intent leavingIntent = new Intent();
-        leavingIntent.putExtras(leavingBundle);
-
-        remoteView.setOnClickFillInIntent(R.id.btn_widget_leaving, leavingIntent);
-
-        //will wrap the entire list in OnUpdate
-        return remoteView;
+            return remoteView;
+        }
     }
 }

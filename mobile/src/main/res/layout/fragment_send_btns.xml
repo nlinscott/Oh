@@ -1,0 +1,47 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+      android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle">
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:id="@+id/frag_btn_omw"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/midblue"
+                android:padding="30dp"
+                android:text="@string/omw"
+                android:textColor="@color/lightgray"
+                android:textStyle="bold|italic" />
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:id="@+id/frag_btn_here"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/darkblue"
+                android:padding="30dp"
+                android:text="@string/here"
+                android:textColor="@color/lightblue"
+                android:textStyle="bold|italic" />
+
+
+        </LinearLayout>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/disabled_view"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+
+</RelativeLayout>

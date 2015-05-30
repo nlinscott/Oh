@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import oh.cwrh.com.oh.R;
+import com.cwrh.oh.R;
 import com.cwrh.oh.database.Contact;
 import com.cwrh.oh.datasync.SendMessage;
 import com.cwrh.oh.tools.Feedback;
@@ -16,7 +16,7 @@ import com.cwrh.oh.tools.Feedback;
 /**
  * Created by Nic on 3/10/2015.
  */
-public class ContactInfoFragment extends Feedback {
+public class ContactInfoFragment extends Feedback{
 
     public ContactInfoFragment(){}
 
@@ -75,6 +75,7 @@ public class ContactInfoFragment extends Feedback {
     public void setContact(Contact c){
         contact = c;
     }
+    public Contact getContact(){return contact;}
 
     /*
     private void setImage(){
@@ -88,6 +89,7 @@ public class ContactInfoFragment extends Feedback {
     }
     */
 
+
     private void sendHere(){
         SendMessage msg = new SendMessage(getActivity().getApplicationContext());
         msg.sendMessage(contact, SendMessage.ACTION_SEND_HERE);
@@ -99,7 +101,6 @@ public class ContactInfoFragment extends Feedback {
         msg.sendMessage(contact, SendMessage.ACTION_SEND_OMW);
         feelFeedback(getActivity().getApplicationContext());
     }
-
 
 
 }

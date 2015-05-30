@@ -19,26 +19,28 @@ public class WidgetBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context c, Intent intent){
 
         String action = intent.getAction();
+         if(WIDGET_BUTTON_CLICKED.equals(action)) {
 
-        Intent start = new Intent(c, SendSMS.class);
-        //was packed into a bundle in the ContactsAdapter, must get a bundle of extras
-        //using SendSMS constants
-        Bundle bundle =  intent.getExtras();
-        //Debug.log(b.getString(SendSMS.PHONE_NUMBER));
 
-        if(action.equals(WIDGET_BUTTON_CLICKED)){
-            if(intent.getBooleanExtra(SendSMS.IS_LEAVING,true)){
+            Intent start = new Intent(c, SendSMS.class);
+            //was packed into a bundle in the ContactsAdapter, must get a bundle of extras
+            //using SendSMS constants
+            Bundle bundle = intent.getExtras();
+            //Debug.log(b.getString(SendSMS.PHONE_NUMBER));
+
+            if (intent.getBooleanExtra(SendSMS.IS_LEAVING, true)) {
                 start.setAction(SendSMS.ACTION_SEND_OMW);
-            }else if(!intent.getBooleanExtra(SendSMS.IS_LEAVING,false)){
+            } else if (!intent.getBooleanExtra(SendSMS.IS_LEAVING, false)) {
                 start.setAction(SendSMS.ACTION_SEND_HERE);
             }
+
+            start.putExtra(SendSMS.NAME, bundle.getString(SendSMS.NAME));
+            start.putExtra(SendSMS.PHONE_NUMBER, bundle.getString(SendSMS.PHONE_NUMBER));
+
+            c.startService(start);
         }
 
-        start.putExtra(SendSMS.NAME, bundle.getString(SendSMS.NAME));
-        start.putExtra(SendSMS.PHONE_NUMBER, bundle.getString(SendSMS.PHONE_NUMBER));
-
-        c.startService(start);
-
     }
+
 
 }
