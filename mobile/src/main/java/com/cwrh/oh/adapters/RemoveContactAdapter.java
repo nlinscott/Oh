@@ -92,6 +92,7 @@ public class RemoveContactAdapter extends BaseAdapter {
     public boolean isInMovableMode(){
         return isInMovableMode;
     }
+
     @Override
     public Contact getItem(int position){return list.get(position);}
 
@@ -104,6 +105,7 @@ public class RemoveContactAdapter extends BaseAdapter {
     public int getCount(){
         return list.size();
     }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 

@@ -28,7 +28,6 @@ public class ViewContactsActivity extends FragmentActivity{
 
     private ExitOverlayView exitOverlayView;
 
-    private View.OnTouchListener touchListner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,7 @@ public class ViewContactsActivity extends FragmentActivity{
 
     private void initialize(){
 
-        touchListner = new View.OnTouchListener() {
+        View.OnTouchListener touchListner = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
@@ -96,12 +95,15 @@ public class ViewContactsActivity extends FragmentActivity{
                 super.onLongPress(ev);
             }
 
+            /**
+             * Debugging only
             @Override
             public boolean onDoubleTap(MotionEvent e) {
                 exitOverlayView.debugMode();
                 Debug.log("double tap");
                 return super.onDoubleTap(e);
             }
+            */
         });
 
 

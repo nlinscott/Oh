@@ -4,32 +4,30 @@
     android:longClickable="true"
     android:padding="5dp"
     android:layout_margin="5dp"
-    android:background="@color/lightgray"
+    android:background="@color/midblue"
     android:weightSum="15"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
      <LinearLayout
-         android:gravity="center"
+         android:layout_gravity="center"
          android:animateLayoutChanges="true"
          android:orientation="vertical"
          android:layout_width="wrap_content"
-         android:layout_height="match_parent">
+         android:layout_height="wrap_content">
          <!-- TODO: for reordering, we have these ImageButtons, but they need a good icon -->
             <ImageButton
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/move_up_one"
-                android:padding="10dp"
-                android:background="@color/contact"
-                android:src="@android:drawable/arrow_up_float"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/arrow_up"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
             <ImageButton
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/move_down_one"
-                android:padding="10dp"
-                android:background="@color/contact"
-                android:src="@android:drawable/arrow_down_float"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/arrow_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
          </LinearLayout>
@@ -43,14 +41,16 @@
 
         <TextView
             android:textSize="24sp"
-            android:textColor="@color/blue"
+            android:text="nic linscott"
+            android:textColor="@color/lightgray"
             android:id="@+id/edit_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoText="false" />
 
         <TextView
-            android:textColor="@color/lightblue"
+            android:text="12345677"
+            android:textColor="@color/lightgray"
             android:id="@+id/edit_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

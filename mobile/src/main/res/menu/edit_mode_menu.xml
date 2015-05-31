@@ -7,5 +7,9 @@
         app:showAsAction="always"
         android:id="@+id/done"
         />
+    <item android:title="@string/reorder"
+        android:showAsAction="always"
+        app:showAsAction="always"
+        android:id="@+id/reorder"/>
 
 </menu>

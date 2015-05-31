@@ -47,8 +47,6 @@ public class ContactSwipeViewActivity extends FragmentActivity {
 
     private final int DELAY = 5000;
 
-    private final int DISABLE_BUTTONS_ON_SEND = 4000;
-
     private static final int PICK_CONTACT = 1;
 
     ArrayList<Contact> contactsList;
@@ -84,6 +82,7 @@ public class ContactSwipeViewActivity extends FragmentActivity {
             item.setEnabled(true);
             item.setTitle(R.string.sync_now);
         }
+        
         return true;
     }
 

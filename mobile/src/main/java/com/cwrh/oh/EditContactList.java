@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -59,6 +57,7 @@ public class EditContactList extends Activity {
 
         list.setAdapter(removeContactAdapter);
         removeContactAdapter.setIsInMovableMode(false);
+        /*
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -67,6 +66,7 @@ public class EditContactList extends Activity {
                 return true;
             }
         });
+        */
         dataSource.close();
 
     }
@@ -81,7 +81,9 @@ public class EditContactList extends Activity {
         if(removeContactAdapter.isInMovableMode()){
 
             menu.findItem(R.id.done).setVisible(true);
+            menu.findItem(R.id.reorder).setVisible(false);
         }else{
+            menu.findItem(R.id.reorder).setVisible(true);
             menu.findItem(R.id.done).setVisible(false);
         }
         return true;
@@ -96,6 +98,10 @@ public class EditContactList extends Activity {
 
         if (id == R.id.done) {
             removeContactAdapter.setIsInMovableMode(false);
+            invalidateOptionsMenu();
+            return true;
+        }else if(id == R.id.reorder){
+            removeContactAdapter.setIsInMovableMode(true);
             invalidateOptionsMenu();
             return true;
         }
